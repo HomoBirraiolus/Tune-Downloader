@@ -79,57 +79,7 @@ class YT_music(QWidget):
         self.output_text.setPlainText( yt.title + " has been successfully downloaded.\n")
        
 """
-    def convert_file(self):
-        # Get the file path from the input field
-        file_path = self.pdf_input.text()
-        if not file_path:
-            self.output_text.setPlainText("Please select a file.")
-            return
-
-        # Initialize OCR model
-        model = ocr_predictor(pretrained=True)
-
-        try:
-            # Check if the file is a PDF or JPG
-            if file_path.lower().endswith(".pdf"):
-                # Convert PDF to images
-                pages = convert_from_path(file_path)
-                extracted_text = ""
-
-                # Perform OCR on each page of the PDF
-                for page in pages:
-                    img_array = np.array(page)
-                    result = model([img_array])
-                    for p in result.export()["pages"]:
-                        for block in p.get("blocks", []):
-                            for line in block.get("lines", []):
-                                for word in line.get("words", []):
-                                    extracted_text += word["value"] + " "
-                        extracted_text += "\n"
-
-            elif file_path.lower().endswith((".jpg", ".jpeg")):
-                # Process the JPG image directly
-                img = Image.open(file_path)
-                img_array = np.array(img)
-                extracted_text = ""
-
-                # Perform OCR on the image
-                result = model([img_array])
-                for p in result.export()["pages"]:
-                    for block in p.get("blocks", []):
-                        for line in block.get("lines", []):
-                            for word in line.get("words", []):
-                                extracted_text += word["value"] + " "
-                    extracted_text += "\n"
-            else:
-                self.output_text.setPlainText("Unsupported file type. Please select a PDF or JPG file.")
-                return
-
-            # Display extracted text in the output area
-            self.output_text.setPlainText(extracted_text)
-
-        except Exception as e:
-            self.output_text.setPlainText(f"Error: {e}")
+    
 
 """
 
